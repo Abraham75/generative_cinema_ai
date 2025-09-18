@@ -24,4 +24,21 @@ Cinema is a visual language. Like any language, it has grammar, vocabulary, and 
 ---
 
 ## 🗂️ Project Structure
+generative_cinema_ai/
+│
+├── main.py                      # 🔁 Orchestrates the full cinematic generation pipeline
+├── sample_script.txt            # 🎬 Sample screenplay used as input
+├── requirements.txt             # 📦 List of Python dependencies
+├── README.md                    # 📘 Project overview and usage instructions
+├── LICENSE                      # ⚖️ MIT license for open-source distribution
+│
+├── modules/                     # 🧠 Modular AI components for cinematic logic
+│   ├── frame_selector.py            # 🎯 Frame selection logic
+│   ├── light_color_simulator.py     # 🎨 Light & color mood inference
+│   ├── lens_renderer.py             # 📷 Lens and focus simulation
+│   ├── camera_movement.py           # 🎥 Suggests dynamic/static camera movement
+│   └── texture_generator.py         # 🧵 Adds stylistic visual texture
+│
+└── utils/                      # 🧰 Utilities and helpers
+    └── script_parser.py            # 📖 Parses input screenplay text file
 
