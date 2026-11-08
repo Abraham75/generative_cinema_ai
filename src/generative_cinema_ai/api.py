@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 from .models import AnalysisRequest, AnalysisResult
@@ -120,3 +122,12 @@ def health() -> dict[str, str]:
 def analyze(request: AnalysisRequest) -> AnalysisResult:
     """IDs are trace context only; authentication and tenant isolation are not implemented."""
     return service.analyze(request)
+
+
+studio_directory = Path(__file__).with_name("studio")
+app.mount("/studio-assets", StaticFiles(directory=studio_directory), name="studio-assets")
+
+
+@app.get("/", include_in_schema=False)
+def studio() -> FileResponse:
+    return FileResponse(studio_directory / "index.html")

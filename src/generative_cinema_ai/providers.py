@@ -88,9 +88,8 @@ class DeterministicCinematicProvider:
     version = "1.0"
 
     def analyze_scene(self, scene: Scene) -> SceneAnalysis:
-        lowered = scene.text.casefold()
         count, rule = max(
-            ((sum(len(re.findall(rf"\b{re.escape(term)}\b", lowered)) for term in item.terms), item) for item in _RULES), key=lambda item: item[0]
+            ((sum(len(re.findall(rf"\b{re.escape(term)}\b", scene.text, re.IGNORECASE)) for term in item.terms), item) for item in _RULES), key=lambda item: item[0]
         )
         if count == 0:
             rule = _DEFAULT
@@ -116,12 +115,11 @@ class DeterministicCinematicProvider:
 
     @staticmethod
     def _evidence(scene: Scene, rule: _Rule) -> list[EvidenceSpan]:
-        lowered = scene.text.casefold()
         evidence: list[EvidenceSpan] = []
         for term in rule.terms:
-            for match in re.finditer(rf"\b{re.escape(term)}\b", lowered):
+            for match in re.finditer(rf"\b{re.escape(term)}\b", scene.text, re.IGNORECASE):
                 start = scene.source_span.start + match.start()
-                evidence.append(EvidenceSpan(start=start, end=start + len(term), text=scene.text[match.start() : match.end()], kind="trigger"))
+                evidence.append(EvidenceSpan(start=start, end=scene.source_span.start + match.end(), text=scene.text[match.start() : match.end()], kind="trigger"))
                 if len(evidence) == 8:
                     return evidence
         if evidence:

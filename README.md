@@ -13,6 +13,12 @@ For every analyzed scene, the system proposes:
 
 The project is designed as the foundation of a larger filmmaking platform: **screenplay intelligence and shot planning first, storyboard generation second, and video previsualization third**.
 
+## Shot planning studio
+
+Directors and cinematographers can import a Fountain or text file, paste a scene, or try the sample. The scene index keeps the script evidence next to its suggested treatment. Add as many coverage shots as a scene needs, describe the action, and edit the framing, lens, movement, lighting and texture. Approve the shots to include in the crew CSV. Editing a shot returns it to draft.
+
+After installation, start `uvicorn generative_cinema_ai.api:app --host 127.0.0.1` and open **http://127.0.0.1:8000/**. The studio uses the local deterministic provider. Work stays in the current page session until exported. The CSV is a crew handoff, not a restorable project file.
+
 ## Why it exists
 
 Screenplays describe story, performance, action, and dialogue, but they rarely provide a complete visual-production plan. Generative Cinema AI helps translate written narrative into structured visual choices that a writer, director, cinematographer, student, or production team can review and refine.
@@ -26,7 +32,7 @@ It is intended to support creative judgment—not replace the director or cinema
 3. The analysis engine detects supported narrative signals in each scene.
 4. The engine produces five categories of cinematic recommendations.
 5. Every recommendation includes a rationale, confidence value, alternatives, and screenplay evidence.
-6. The result is returned as structured JSON for use by a command-line tool, application, or future production interface.
+6. The result is returned as structured JSON for use by a command-line tool, application, or the bundled browser studio.
 
 ```mermaid
 flowchart LR
@@ -120,6 +126,7 @@ Available endpoints:
 
 | Method | Endpoint | Purpose |
 |---|---|---|
+| `GET` | `/` | Open the shot planning studio |
 | `GET` | `/health` | Return application health and version |
 | `POST` | `/v1/analysis` | Parse screenplay text and return scene-level cinematic recommendations |
 
@@ -131,7 +138,7 @@ Available endpoints:
 | `plain_text` | Treats the complete submission as one scene |
 | `auto` | Uses recognized scene headings when present and otherwise falls back to one plain-text scene |
 
-Supported scene headings begin with `INT.`, `EXT.`, `INT./EXT.`, or `EXT./INT.`. This prototype is not yet a complete implementation of the Fountain specification. PDF, DOCX, FDX, OCR, and secure file-upload workflows are planned rather than currently supported.
+Supported scene headings begin with `INT.`, `EXT.`, `INT./EXT.`, or `EXT./INT.`. The parser also accepts forced headings such as `.UNDERWATER`. This prototype is not yet a complete implementation of the Fountain specification. PDF, DOCX, FDX, OCR, and secure file-upload workflows are planned rather than currently supported.
 
 ## Safety defaults
 
@@ -171,7 +178,7 @@ The original root-level cinematic modules remain for historical reference. New d
 - richer screenplay structure and beat detection;
 - policy-controlled third-party LLM adapters;
 - editable and versioned visual treatments;
-- shot-list and production-document exports;
+- additional production-document exports beyond the approved-shot CSV;
 - human creative evaluation; and
 - secure projects, identity, permissions, and tenant isolation.
 

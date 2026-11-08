@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generative Cinema AI · Shot planning</title>
+<link rel="stylesheet" href="/studio-assets/studio.css">
+<script src="/studio-assets/studio.js" defer></script>
+</head>
+<body>
+<header><div class="brand"><span class="mark" aria-hidden="true">◧</span> Generative Cinema AI</div><span class="local">Local workspace</span></header>
+<main>
+<section id="intake">
+<div class="intro"><p class="eyebrow">Pre-production</p><h1>Shot planning studio</h1><p>Start with a scene. Review its visual treatment, build your coverage, and hand off an approved shot list.</p></div>
+<form id="script-form">
+<div class="bar"><label for="script">Screenplay</label><div class="actions"><button type="button" id="sample">Use sample</button><label class="file">Import file<input type="file" id="file" accept=".fountain,.txt,text/plain"></label></div></div>
+<textarea id="script" required maxlength="500000" placeholder="INT. PROJECTION ROOM - NIGHT"></textarea>
+<div class="bar"><div><label for="format">Script format</label><select id="format"><option value="auto">Auto-detect</option><option value="fountain">Fountain</option><option value="plain_text">Plain text (one scene)</option></select></div><button class="primary">Analyze screenplay →</button></div>
+</form>
+<p class="hint">Use a .fountain or .txt file, or paste a scene. Session edits last until you close or refresh this page.</p>
+</section>
+<section id="workspace" hidden>
+<div class="bar top"><div><p class="eyebrow">Pre-production</p><h1>Shot planner</h1></div><div class="actions"><button id="revise">Edit screenplay</button><button class="primary" id="export" disabled>Export approved CSV</button></div></div>
+<p id="summary"></p><p id="warning" hidden></p>
+<div class="desk"><nav aria-label="Scenes"><h2>Scene index</h2><div id="index"></div></nav><article id="scene"></article></div>
+</section>
+<p id="status" role="status" aria-live="polite"></p>
+</main></body></html>

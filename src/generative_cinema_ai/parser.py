@@ -25,6 +25,9 @@ def _headings(text: str) -> list[_Heading]:
         match = _HEADING.match(raw.strip())
         if match:
             found.append(_Heading(offset, raw.strip().lstrip("."), match.group("prefix").upper().replace(".", ""), match.group("body").strip()))
+        elif re.match(r"^\.[^\s.]", raw.strip()):
+            body = raw.strip()[1:]
+            found.append(_Heading(offset, body, "UNKNOWN", body))
         offset += len(line)
     return found
 

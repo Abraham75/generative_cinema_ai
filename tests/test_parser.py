@@ -34,3 +34,13 @@ def test_preamble_and_trailing_whitespace_are_preserved_without_gaps() -> None:
     assert "Title: Owned Test" in scenes[0].text
     assert "".join(scene.text for scene in scenes) == text
     assert scenes[-1].source_span.end == len(text)
+
+
+def test_forced_heading_preserves_original_source_and_unknown_setting() -> None:
+    text = ".OPEN WATER - DAWN\r\nA wave breaks.\r\n...silence\r\n"
+    scenes, warnings = parse_screenplay(text)
+    assert not warnings
+    assert len(scenes) == 1
+    assert scenes[0].heading == "OPEN WATER - DAWN"
+    assert scenes[0].interior_exterior == "UNKNOWN"
+    assert scenes[0].text == text

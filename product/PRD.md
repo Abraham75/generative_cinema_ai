@@ -1,5 +1,18 @@
 # Generative Cinema AI — Product Requirements Document
 
+## Current delivery priority — a usable crew handoff
+
+The first user is a director or cinematographer preparing coverage for a scene. The immediate goal is to leave a planning session with a reviewed shot list that another crew member can read. The local studio delivers a narrow slice of Stage 1. The broader release criteria below remain targets.
+
+| Research observation | Product decision |
+|---|---|
+| A production shot list identifies individual shots and records their description, type and movement. [StudioBinder shot-list guide](https://www.studiobinder.com/blog/what-is-a-shot-list-example/) | A scene treatment can seed multiple individually editable shots. Each approved shot exports as its own CSV row. |
+| Fountain permits both conventional and period-forced scene headings. [Fountain syntax](https://fountain.io/syntax/) | Accept both in the local workflow, retain the original source, and leave the setting unknown when a forced heading gives no interior/exterior cue. |
+
+**Next evaluation.** Give a director and a cinematographer the same owned two-scene excerpt. Ask each to trace a suggestion, create two distinct shots, revise one, and export only the approved coverage. Record time to first approved export, missing crew fields, and whether the receiving crew member can identify what to shoot. These are proposed pilot measures. Usability, time savings, and demand still need direct validation.
+
+**Next development decision.** Use observed losses of work and handoff problems to prioritize resumable projects, shot ordering, and additional export fields before investing in storyboard generation.
+
 **Status:** Draft for product and architecture approval  
 **Product class:** Licensable enterprise creative-intelligence platform  
 **Target date:** Not set  

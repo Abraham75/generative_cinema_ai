@@ -61,3 +61,22 @@ def test_oversized_body_is_rejected_before_validation_without_echo() -> None:
 def test_non_loopback_request_is_blocked_by_default() -> None:
     guarded_client = TestClient(app, client=("203.0.113.10", 50000))
     assert guarded_client.get("/health").status_code == 403
+
+
+def test_studio_and_assets_are_available_locally() -> None:
+    assert 'id="script-form"' in client.get("/").text
+    for path in ("studio.js", "studio.css"):
+        assert client.get(f"/studio-assets/{path}").status_code == 200
+    guarded = TestClient(app, client=("203.0.113.10", 50000))
+    assert guarded.get("/").status_code == 403
+
+
+def test_trigger_offsets_after_unicode_case_expansion() -> None:
+    text = "INT. CAFÉ - DAY\n🎬 Straße. İpek watches the dark."
+    result = client.post("/v1/analysis", json={
+        "tenant_id": "00000000-0000-0000-0000-000000000001",
+        "project_id": "00000000-0000-0000-0000-000000000002",
+        "screenplay_text": text,
+    }).json()
+    span = result["scenes"][0]["recommendations"][0]["evidence"][0]
+    assert text[span["start"]:span["end"]] == span["text"] == "dark"
